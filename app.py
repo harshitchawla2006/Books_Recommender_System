@@ -2,19 +2,12 @@ import streamlit as st
 import pickle
 import numpy as np
 import pandas as pd
-
-# -------------------------------------------------
-# PAGE CONFIG (MUST BE FIRST STREAMLIT COMMAND)
-# -------------------------------------------------
 st.set_page_config(
     page_title="Book Recommender",
     page_icon="📚",
     layout="wide"
 )
 
-# -------------------------------------------------
-# FORCE DARK THEME + CUSTOM CSS
-# -------------------------------------------------
 st.markdown("""
 <style>
 
@@ -99,21 +92,15 @@ button:hover {
 
 </style>
 """, unsafe_allow_html=True)
-
-# FORCE CSS LOAD
 st.markdown("<div></div>", unsafe_allow_html=True)
 
-# -------------------------------------------------
-# LOAD DATA
-# -------------------------------------------------
+
 popular_df = pickle.load(open('popular.pkl', 'rb'))
 pt = pickle.load(open('pt.pkl', 'rb'))
 books = pickle.load(open('books.pkl', 'rb'))
 similarity_scores = pickle.load(open('similarity_scores.pkl', 'rb'))
 
-# -------------------------------------------------
-# RECOMMENDATION FUNCTION
-# -------------------------------------------------
+
 def recommend(book_name):
     index = np.where(pt.index == book_name)[0][0]
     similar_items = sorted(
@@ -134,13 +121,8 @@ def recommend(book_name):
         ])
     return data
 
-# -------------------------------------------------
-# UI
-# -------------------------------------------------
 st.title("📚 Book Recommender System")
 st.markdown("### Discover popular books & get smart recommendations")
-
-# ---------------- POPULAR BOOKS ---------------- #
 st.subheader("🔥 Popular Books")
 
 cols = st.columns(5)
@@ -157,8 +139,6 @@ for idx, col in enumerate(cols):
             </div>
         </div>
         """, unsafe_allow_html=True)
-
-# ---------------- RECOMMEND ---------------- #
 st.divider()
 st.subheader("🎯 Recommend Similar Books")
 
